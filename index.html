@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sistema de Control de Asistencias</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="icon" href="img/SUR.jpg">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        function startTime() {
+            var hora_hoy = new Date();
+            var h = hora_hoy.getHours();
+            var m = hora_hoy.getMinutes();
+            var s = hora_hoy.getSeconds();
+
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('Marcador_Hora').innerHTML = h + ":" + m + ":" + s;
+            t = setTimeout('startTime()', 500);
+        }
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+
+        // MARCACIÓN DE HORA DE ENTRADA DE LOS TRABAJADORES
+        function postEntrada(e) {
+            // Prevenir comportamiento por defecto del botón tipo submit (recargar la página)
+            e.preventDefault()
+
+            /* Código para invocación POST a php con ajax */
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "php/validarEntrada.php",
+                    data: $('#marcacion').serialize(),
+                    success: function (response) {
+
+                        /* Pintar en consola el json resultado */
+                        console.log(response);
+
+                        /* Recuperar la data recibida en response */
+                        if (response) {
+                            let jsonData = JSON.parse(response);
+
+                            /* Llenar los campos del formulario en base a lo recibido en formato json */
+                            document.getElementById("txtname").value = jsonData.trabajador.nombre;
+                            document.getElementById("txthoraentrada").value = jsonData.registro.fecha_hora;
+                        }
+                    }
+                }
+            );
+        }
+
+        // MARCACIÓN DE HORA DE SALIDA DE LOS TRABAJADORES
+        function postSalida(e) {
+            // Prevenir comportamiento por defecto del botón tipo submit (recargar la página)
+            e.preventDefault()
+
+            /* Código para invocación POST a php con ajax */
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "php/validarSalida.php",
+                    data: $('#marcacion').serialize(),
+                    success: function (response) {
+
+                        /* Pintar en consola el json resultado */
+                        console.log(response);
+
+                        /* Recuperar la data recibida en response */
+                        if (response) {
+                            let jsonData = JSON.parse(response);
+
+                            /* Llenar los campos del formulario en base a lo recibido en formato json */
+                            document.getElementById("txtname").value = jsonData.trabajador.nombre;
+                            document.getElementById("txthorasalida").value = jsonData.registro.fecha_hora;
+                        }
+                    }
+                }
+            );
+        }
+
+        // VALIDACIÓN PARA EL ACCESO DEL ADMINISTRADOR
+        function validarAdmin(e){
+            e.preventDefault();
+       
+            if(document.getElementById('txtusuario').value == "" || (document.getElementById('txtclave').value == "")){
+                var mensaje = document.getElementById("mensaje");
+                mensaje.innerHTML = "Faltan datos";
+                return;
+            }
+
+            /* Código para invocación POST a php con ajax */
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "php/validarAdmin.php",
+                    data: $('#admin').serialize(),
+                    success: function (response) {
+
+                        /* Pintar en consola el json resultado */
+                        console.log(response);
+
+                        /* Recuperar la data recibida en response */
+                        if (response) {
+                            let jsonData = JSON.parse(response);
+
+                            if (jsonData.respuesta==="OK"){
+                                window.location.replace("html/accesoAdmin.html")
+                            } else{
+                                var mensaje=document.getElementById("mensaje");
+
+                                mensaje.innerHTML="Contraseña o clave incorrecta";
+                            }
+                        }
+                    }
+                }
+            );
+        }
+    </script>
+</head>
+
+<body onload="startTime()">
+    <div>
+        <header>
+            <h1 class="titulo">Control de Asistencia de la Empresa Dracsur SAC</h1>
+            <button class="acceso_admin" id="btn_abrir_acceso_admin">ACCESO ADMIN</button>
+        </header>
+
+        <div class="overlay" id="popup_overlay">
+            <div class="emergente">
+                <div class="logo_emergente">
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdumkrjmTGhmTURGAixAAVOaKNc4cvSJMYxiZvuaf2zgca-S6s-s56x5fVR8H4qqhlTXA&usqp=CAU">
+                </div>
+
+                <div class="titulo_administrador">
+                    <h3>ADMINISTRADOR</h3><div class="alertaAdmin" id="mensaje"></div>                                       
+                </div>
+
+                <form id="admin">
+                    <div class="id_clave_acceso_admin">
+                        <input type="text" maxlength="10" placeholder="Usuario" name="usuario" id="txtusuario">
+                        <input type="password" maxlength="10" placeholder="Clave" name="clave" id="txtclave">
+                    </div>
+                    <div class="ingresar_cerrar">
+                        <input type="submit" value="Ingresar" id="btn_ingresar_acceso_admin">
+                        <input type="submit" value="Cerrar" id="btn_cerrar_acceso_admin">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <section>
+            <div class="logo_empresa">
+                <img src="img/SUR.jpg" alt="logo de empresa">
+            </div>
+        </section>
+
+        <section>
+            <div id="Marcador_Hora"></div>
+            <div id="Marcador_Fecha">
+                <script>
+                    var dia_actual = new Date();
+                    var dia = new Array(7);
+                    dia[0] = "Domingo";
+                    dia[1] = "Lunes";
+                    dia[2] = "Martes";
+                    dia[3] = "Miércoles";
+                    dia[4] = "Jueves";
+                    dia[5] = "Viernes";
+                    dia[6] = "Sábado";
+
+                    var mes_actual = new Date();
+                    var m = mes_actual.getMonth() + 1;
+                    var mes = (m < 10) ? '0' + m : m;
+                    var mes = new Array(12);
+                    mes[0] = "Enero";
+                    mes[1] = "Febrero";
+                    mes[2] = "Marzo";
+                    mes[3] = "Abril";
+                    mes[4] = "Mayo";
+                    mes[5] = "Junio";
+                    mes[6] = "Julio";
+                    mes[7] = "Agosto";
+                    mes[8] = "Septiembre";
+                    mes[9] = "Octubre";
+                    mes[10] = "Noviembre";
+                    mes[11] = "Diciembre";
+
+                    document.write(dia[dia_actual.getDay()] + ", " + dia_actual.getDate() + " de " + mes[mes_actual.getMonth()] + " de " + dia_actual.getFullYear()); 
+                </script>
+            </div>
+        </section>
+
+        <section>
+            <form action="" method="" id="marcacion">
+                <div class="contenedor_de_registro">
+                    <label for="">ID:</label>
+                    <input type="number" name="id" maxlength="5" placeholder="Ingrese su ID" required="required" />
+                    <label for="">Clave:</label>
+                    <input type="password" name="clave" maxlength="15" placeholder="Ingrese su clave"
+                        required="required" />
+                    <label for="">Nombre:</label>
+                    <input type="text" name="nombre" placeholder="" id="txtname" />
+                    <label for="">Hora de Entrada:</label>
+                    <input type="text" name="hora_entrada" placeholder="" id="txthoraentrada" />
+                    <label for="">Hora de Salida:</label>
+                    <input type="text" name="hora_salida" placeholder="" id="txthorasalida" />
+                </div>
+                <div class="contenedor_de_envio">
+                    <input type="submit" value="Registrar entrada" name="boton_entrada" id="btnEntrada" />
+                    <input type="submit" value="Registrar salida" name="boton_salida" id="btnSalida" />
+                    <input type="reset" value="Limpiar"/>
+                </div>
+            </form>
+        </section>
+    </div>
+    
+    <script> 
+        var btnEntrada = document.getElementById("btnEntrada");
+        btnEntrada.addEventListener("click", postEntrada);
+
+        var btnSalida = document.getElementById("btnSalida");
+        btnSalida.addEventListener("click", postSalida);
+
+        // Script de login del Administrador
+        let btnAdmin = document.getElementById("btn_ingresar_acceso_admin");
+        btnAdmin.addEventListener("click",validarAdmin);
+    </script>
+
+    <script src="js/PopupLoginAdmin.js"></script>
+
+</body>
+</html>

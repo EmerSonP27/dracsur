@@ -1,0 +1,175 @@
+* {
+    margin: 0%;
+    padding: 0%;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(90deg, rgb(41, 219, 243), rgb(135, 245, 51));
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(90deg, rgb(41, 219, 243), rgb(135, 245, 51));
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.titulo {
+    text-align: center;
+    color: blue;
+    font-family: Broadway;
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+.logo {
+    text-align: center;
+    border-radius: 20px;
+    padding: 12px;
+}
+
+.registro {
+    color: rgb(247, 10, 10);
+    text-align: center;
+    font-family: Bodoni MT Black;
+    font-size: 20px;
+}
+
+.id_trabajador {
+    color: black;
+    font-family: Arial;
+    font-size: 20px;
+    width: 170px;
+    height: 50px;
+}
+
+.clave {
+    color: black;
+    font-family: Arial;
+    font-size: 20px;
+    width: 170px;
+    height: 50px;
+}
+
+.nombre {
+    color: black;
+    font-family: Arial;
+    font-size: 20px;
+    width: 170px;
+    height: 50px;
+}
+
+.dni {
+    color: black;
+    font-family: Arial;
+    font-size: 20px;
+    width: 170px;
+    height: 50px;
+}
+
+label {
+    text-align: center;
+    inset-block: center;
+}
+
+.formulario {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: center;
+}
+
+.guardar {
+    width: 20%;
+    margin-bottom: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    outline: none;
+    padding: 20px;
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 1px rgb(8, 8, 8);
+    border: 1px solid rgba(77, 190, 239, 0.3);
+    border-radius: 4px;
+    position: absolute;
+    top: 500px;
+    right: 270px;
+}
+
+.guardar-limpiar input[type="submit"]:hover {
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #5667a0;
+    transition: .6s;
+}
+
+.limpiar {
+    width: 20%;
+    margin-bottom: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    outline: none;
+    padding: 20px;
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 1px rgb(8, 8, 8);
+    border: 1px solid rgba(77, 190, 239, 0.3);
+    border-radius: 4px;
+    position: absolute;
+    top: 600px;
+    right: 270px;
+}
+
+.guardar-limpiar input[type="reset"]:hover {
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #5667a0;
+    transition: .6s;
+}
+
+.boton-volver {
+    text-align: center;
+    font-size: 45px;
+}
+
+#alerta {
+    text-align: left;
+    color: red;
+}
+
+a.button {
+    background: #6DC6FC;
+    display: inline-block;
+    color: rgb(251, 251, 251);
+    font-size: 1em;
+    margin: 79px;
+    padding: 10px 0px;
+    text-align: center;
+    width: 200px;
+    text-decoration: none;
+    box-shadow: 0px 3px 0px #373c3c;
+    border-radius: 4px;
+    width: 12%;
+    position: relative;
+    left: 39.5em;
+}
+
+a.button.radius {
+    border-radius: 50px;
+}
+
+a.button:hover {
+    box-shadow: 0px 0px 0px;
+    padding-top: 7px;
+}

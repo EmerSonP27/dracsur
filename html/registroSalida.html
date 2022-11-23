@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sistema de asistencias</title>
+    <link rel="stylesheet" href="/css/estiloRegistro.css">
+    <link rel="icon" href="/img/SUR.jpg">
+
+    <script type="text/javascript">
+        function startTime()
+        {
+        var today=new Date();
+        var h=today.getHours();
+        var m=today.getMinutes();
+        var s=today.getSeconds();
+        // add a zero in front of numbers<10
+        m=checkTime(m);
+        s=checkTime(s);
+        document.getElementById('txt').innerHTML=h+":"+m+":"+s;
+        t=setTimeout('startTime()',500);
+        }
+        function checkTime(i)
+        {
+        if (i<10)
+        {
+        i="0" + i;
+        }
+        return i;
+        }
+    
+                
+        </script>
+</head>
+<body onload="startTime()">
+    <header>
+        <div class="logo">
+            <h1>Control de asistencia de la empresa Dracsur.SAC</h1>
+        </div>
+        <div id="button-container">
+            <a href="/html/accesoAdmin.html" class="btn btn-green">ADMIN</a>
+        </div>
+    </header>
+    <section>
+        <div class="img">
+            <img src="/img/SUR.jpg" alt="logo de empresa">
+        </div>
+        <div class="registro">
+        
+        <form method="post">
+            <div id="txt"></div>
+            <input type="text" name="u" placeholder="ID" required="required" />
+        </form>
+
+        <form method="post">
+            <input type="text" name="u" placeholder="CLAVE" required="required" />
+        </form>
+
+        <form method="post">
+            <input type="text" name="u" placeholder="TRABAJADOR" required="required" />
+        </form>
+
+        <form method="post">
+            <input type="text" name="u" placeholder="HORA DE ENTRADA" required="required" />
+        </form>
+         
+        <form method="post">
+            <input type="text" name="u" placeholder="HORA DE SALIDA" required="required" />
+        </form>
+         <a href="#">
+            <button>SALIDA</button>
+          </a> 
+        </div>
+    </section>
+
+</body>
+</html>

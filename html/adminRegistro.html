@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/estilosRegistro.css">
+    <title>Acceso-Admin</title>
+    <link rel="icon"
+        href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdumkrjmTGhmTURGAixAAVOaKNc4cvSJMYxiZvuaf2zgca-S6s-s56x5fVR8H4qqhlTXA&usqp=CAU">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        function validarGuardar(e) {
+            e.preventDefault();
+
+            if ((document.getElementById('camp_id_trabajador').value == "") || (document.getElementById('camp_clave')).value == "" || (document.getElementById('camp_nombre').value == "") || (document.getElementById('camp_dni').value == "")) {
+                var mensaje = document.getElementById("alerta");
+                mensaje.innerHTML = "Rellene los campos";
+                return;
+            }
+
+            /* Código para invocación POST a php con ajax */
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "../php/validarAdminRegistro.php",
+                    data: $('#registrar').serialize(),
+                    success: function (response) {
+
+                        /* Pintar en consola el json resultado */
+                        console.log(response);
+
+                        /* Recuperar la data recibida en response */
+                        if (response) {
+                            let jsonData = JSON.parse(response);
+
+                            if (jsonData.respuesta === "OK") {
+                                var mensaje = document.getElementById("alerta");
+                                mensaje.innerHTML = "Usuario registrado exitosamente";
+                            } else {
+                                var mensaje = document.getElementById("alerta");
+                                mensaje.innerHTML = "Error al registrar";
+                            }
+                        }
+                    }
+                }
+            );
+        }
+    </script>
+
+</head>
+
+<body>
+    <header>
+        <div class="titulo">
+            <h1>REGISTRAR NUEVO PERSONAL</h1>
+        </div>
+
+        <div class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdumkrjmTGhmTURGAixAAVOaKNc4cvSJMYxiZvuaf2zgca-S6s-s56x5fVR8H4qqhlTXA&usqp=CAU"
+                alt="logo de empresa">
+        </div>
+    </header>
+    <section>
+
+        <form id="registrar" action="../php/validarAdminRegistro.php" method="post">
+            <div class="formulario">
+                <div class="registro">
+                    <h2>REGISTRO</h2>
+                </div>
+                <div class="id_trabajador">
+                    <label for="">Id_trabajador</label>
+                    <input type="number" name="id_trabajador" id="camp_id_trabajador">
+                </div>
+                <div class="clave">
+                    <label for="">Clave</label>
+                    <input type="text" name="clave" id="camp_clave">
+                </div>
+
+                <div class="nombre">
+                    <label for="">Nombre</label>
+                    <input type="text" name="nombre" id="camp_nombre">
+                </div>
+
+                <div class="dni">
+                    <label for="">DNI</label>
+                    <input type="number" name="dni" maxlength="8" id="camp_dni">
+                </div>
+
+                <div class="guardar-limpiar">
+                    <input class="guardar" type="submit" value="GUARDAR" name="GUARDAR" id="btnguardar">
+                    <input class="limpiar" type="reset" value="LIMPIAR">
+                </div>
+
+                <div class="msjAlerta" id="alerta"></div>
+            </div>
+        </form>
+
+        <script>
+            let btnguardar = document.getElementById("btnguardar");
+            btnguardar.addEventListener("click", validarGuardar);
+        </script>
+
+        <a href="http://localhost/Proyecto/html/accesoAdmin.html" class="button">Volver</a>
+    </section>
+</body>
+
+</html>
